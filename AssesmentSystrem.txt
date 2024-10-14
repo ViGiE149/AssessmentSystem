@@ -1,0 +1,59 @@
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(64) NOT NULL,  -- Store encrypted password
+    email VARCHAR(100) NOT NULL,
+    role VARCHAR(20) NOT NULL
+);
+
+
+CREATE TABLE tests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    test_name VARCHAR(255) NOT NULL,
+    duration INT NOT NULL,
+    test_date DATE NOT NULL,
+    latest_pin VARCHAR(255) NOT NULL,
+    show_answers_at_end BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE options (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    question_id INT,
+    option_text VARCHAR(255),
+    FOREIGN KEY (question_id) REFERENCES questions(id)
+);
+
+
+
+
+jdbc:mysql://localhost:3306/SchoolTestDb?zeroDateTimeBehavior=CONVERT_TO_NULL [root on Default schema]
+
+CREATE TABLE tests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    test_name VARCHAR(255),
+    subject VARCHAR(255),
+    test_date DATE,
+    duration INT,
+    test_pin VARCHAR(255),
+    show_answers VARCHAR(3),
+    instructions TEXT
+);
+
+CREATE TABLE questions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    test_id INT,
+    question_text TEXT,
+    question_type VARCHAR(50),
+    correct_answer VARCHAR(255),
+    FOREIGN KEY (test_id) REFERENCES tests(id)
+);
+
+CREATE TABLE options (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    question_id INT,
+    option_text VARCHAR(255),
+    option_number INT,
+    FOREIGN KEY (question_id) REFERENCES questions(id)
+);
