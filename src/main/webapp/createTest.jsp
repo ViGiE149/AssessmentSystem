@@ -92,8 +92,11 @@
         <label>Test Name:</label>
         <input type="text" name="testName" required /><br>
 
-        <label>Test Duration (minutes):</label>
-        <input type="number" name="duration" required /><br>
+        <label>Test Duration:</label>
+        <div>
+            <input type="number" name="durationHours" min="0" required placeholder="Hours" style="width: 48%; display: inline-block;"/>
+            <input type="number" name="durationMinutes" min="0" max="59" required placeholder="Minutes" style="width: 48%; display: inline-block;"/>
+        </div><br>
 
         <label>Test Date:</label>
         <input type="date" name="testDate" required /><br>

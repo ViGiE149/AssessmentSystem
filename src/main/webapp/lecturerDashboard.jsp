@@ -118,6 +118,7 @@
                 <li><a href="editTest.jsp">Edit Test</a></li>
                 <li><a href="viewGrades.jsp">View Grades</a></li>
                 <li><a href="activateTests.jsp">Activate Tests</a></li>
+                <a href="takeTest.jsp?testId=5&testName=SampleTest">Take the Test</a>
             </ul>
         </div>
 

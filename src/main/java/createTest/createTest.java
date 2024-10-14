@@ -1,3 +1,5 @@
+package createTest;
+
 import DatabaseConnection.DatabaseConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,7 +46,33 @@ public class createTest extends HttpServlet {
 
         // Get form data
         String testName = request.getParameter("testName");
-        int duration = Integer.parseInt(request.getParameter("duration"));
+        
+        // Get duration in hours and minutes
+        String durationHoursStr = request.getParameter("durationHours");
+        String durationMinutesStr = request.getParameter("durationMinutes");
+
+        int durationHours = 0;
+        int durationMinutes = 0;
+
+        try {
+            // Validate and parse hours
+            if (durationHoursStr != null && !durationHoursStr.isEmpty()) {
+                durationHours = Integer.parseInt(durationHoursStr);
+            }
+            
+            // Validate and parse minutes
+            if (durationMinutesStr != null && !durationMinutesStr.isEmpty()) {
+                durationMinutes = Integer.parseInt(durationMinutesStr);
+            }
+        } catch (NumberFormatException e) {
+            request.setAttribute("errorMessage", "Invalid duration format.");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
+            return; // Stop further processing
+        }
+
+        // Calculate total duration in minutes
+        int totalDuration = (durationHours * 60) + durationMinutes;
+
         String testDate = request.getParameter("testDate");
         String latestPin = request.getParameter("latestPin");
         String showAnswers = request.getParameter("showAnswers");
@@ -73,7 +101,7 @@ public class createTest extends HttpServlet {
             String testSql = "INSERT INTO tests (test_name, duration, test_date, latest_pin, show_answers_at_end) VALUES (?, ?, ?, ?, ?)";
             testStmt = conn.prepareStatement(testSql, PreparedStatement.RETURN_GENERATED_KEYS);
             testStmt.setString(1, testName);
-            testStmt.setInt(2, duration);
+            testStmt.setInt(2, totalDuration); // Use totalDuration instead of duration
             testStmt.setString(3, testDate);
             testStmt.setString(4, latestPin);
             testStmt.setBoolean(5, showAnswersAtEnd);

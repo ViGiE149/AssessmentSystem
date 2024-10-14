@@ -1,9 +1,8 @@
 DatabaseConnection\DatabaseConnection.class
 RegisterServlet\RegisterServlet.class
 com\mycompany\assessmentsystem\resources\JakartaEE8Resource.class
-TestServlet.class
 com\mycompany\assessmentsystem\JakartaRestConfiguration.class
+createTest\createTest.class
 submitTestServlet\SubmitTestServlet.class
 RegisterServlet\HashUtil.class
-createTest.class
 LoginServlet\LoginServlet.class

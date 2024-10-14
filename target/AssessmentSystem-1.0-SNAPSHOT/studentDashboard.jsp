@@ -113,6 +113,7 @@
         <div class="sidebar" id="sidebar">
             <h2>Student Menu</h2>
             <ul>
+                <li><a href="viewTests.jsp">View Tests</a></li>
                 <li><a href="viewCourses.jsp">View Courses</a></li>
                 <li><a href="submitAssignments.jsp">Submit Assignments</a></li>
                 <li><a href="viewGrades.jsp">View Grades</a></li>
