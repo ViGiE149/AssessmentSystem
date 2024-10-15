@@ -6,3 +6,4 @@ createTest\createTest.class
 submitTestServlet\SubmitTestServlet.class
 RegisterServlet\HashUtil.class
 LoginServlet\LoginServlet.class
+activateTest.class

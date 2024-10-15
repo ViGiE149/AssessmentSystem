@@ -50,6 +50,8 @@ public class createTest extends HttpServlet {
         // Get duration in hours and minutes
         String durationHoursStr = request.getParameter("durationHours");
         String durationMinutesStr = request.getParameter("durationMinutes");
+        String userIdStr = request.getParameter("userId"); // Get user ID
+        String userId = request.getParameter("userId");// Parse user ID // Parse user ID
 
         int durationHours = 0;
         int durationMinutes = 0;
@@ -98,13 +100,14 @@ public class createTest extends HttpServlet {
             conn = DatabaseConnection.getConnection();
 
             // Insert into test table
-            String testSql = "INSERT INTO tests (test_name, duration, test_date, latest_pin, show_answers_at_end) VALUES (?, ?, ?, ?, ?)";
+            String testSql = "INSERT INTO tests (test_name, duration, test_date, latest_pin, show_answers_at_end, user_id) VALUES (?, ?, ?, ?, ?,?)";
             testStmt = conn.prepareStatement(testSql, PreparedStatement.RETURN_GENERATED_KEYS);
             testStmt.setString(1, testName);
             testStmt.setInt(2, totalDuration); // Use totalDuration instead of duration
             testStmt.setString(3, testDate);
             testStmt.setString(4, latestPin);
             testStmt.setBoolean(5, showAnswersAtEnd);
+            testStmt.setString(6, userId); // Include user ID
             testStmt.executeUpdate();
 
             // Retrieve generated test ID

@@ -13,6 +13,7 @@ CREATE TABLE tests (
     duration INT NOT NULL,
     test_date DATE NOT NULL,
     latest_pin VARCHAR(255) NOT NULL,
+    is_active BOOLEAN ,
     show_answers_at_end BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -27,6 +28,23 @@ CREATE TABLE options (
 
 
 
+CREATE TABLE test_results (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id VARCHAR(255),
+    test_name VARCHAR(255),
+    score INT,
+    attempt_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+CREATE TABLE user_answers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    test_id INT,
+    question_id INT,
+    user_id INT,
+    user_answer VARCHAR(255)
+);
 
 jdbc:mysql://localhost:3306/SchoolTestDb?zeroDateTimeBehavior=CONVERT_TO_NULL [root on Default schema]
 

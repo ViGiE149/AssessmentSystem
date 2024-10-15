@@ -88,6 +88,10 @@
 </head>
 <body>
     <form action="createTest" method="post">
+        
+        <input type="hidden" name="userId" value="<%= session.getAttribute("username") %>"> 
+        
+        
         <h3>Create a New Test</h3>
         <label>Test Name:</label>
         <input type="text" name="testName" required /><br>
