@@ -1,9 +1,13 @@
+com\mycompany\assessmentsystem\JakartaRestConfiguration.class
+submitTestServlet\SubmitTestServlet.class
+RegisterServlet\HashUtil.class
+activateTest.class
 DatabaseConnection\DatabaseConnection.class
 RegisterServlet\RegisterServlet.class
 com\mycompany\assessmentsystem\resources\JakartaEE8Resource.class
-com\mycompany\assessmentsystem\JakartaRestConfiguration.class
+TestServlet.class
+testsClass\Test.class
 createTest\createTest.class
-submitTestServlet\SubmitTestServlet.class
-RegisterServlet\HashUtil.class
+Questions\Question.class
 LoginServlet\LoginServlet.class
-activateTest.class
+EditTestServlet\EditTestServlet.class

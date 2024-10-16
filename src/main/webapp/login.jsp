@@ -1,9 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : 10 Oct 2024, 10:47:01
-    Author     : Admin
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,24 +7,26 @@
     <title>Login</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
         }
         .login-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             width: 320px;
             text-align: center;
-            padding: 10px;
         }
         .login-container h2 {
             margin-bottom: 20px;
+            font-size: 2rem;
+            color: #333;
         }
         .login-container input {
             width: 100%;
@@ -38,21 +34,35 @@
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-size: 1rem;
         }
         .login-container button {
-            width: 80%;
-            padding: 5px;
-            background-color: #4CAF50;
+            width: 100%;
+            padding: 10px;
+            background-color: #ff4757;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 30px;
             cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s, transform 0.3s;
         }
         .login-container button:hover {
-            background-color: #45a049;
+            background-color: #ff6b81;
+            transform: translateY(-3px);
+        }
+        .error-message {
+            color: #ff4757;
+            margin-top: 10px;
+            font-size: 0.9rem;
         }
         .register-link {
             margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        .register-link a {
+            color: #4e54c8;
+            text-decoration: none;
         }
     </style>
 </head>

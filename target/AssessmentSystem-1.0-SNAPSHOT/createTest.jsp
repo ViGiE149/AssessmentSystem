@@ -7,7 +7,7 @@
         /* General Styles */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
             margin: 0;
             padding: 20px;
         }

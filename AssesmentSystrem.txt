@@ -9,14 +9,17 @@ CREATE TABLE users (
 
 CREATE TABLE tests (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    test_name VARCHAR(255) NOT NULL,
+    test_name VARCHAR(255) NOT NULL, 
+    user_id INT NOT NULL,
     duration INT NOT NULL,
     test_date DATE NOT NULL,
     latest_pin VARCHAR(255) NOT NULL,
-    is_active BOOLEAN ,
+    is_active BOOLEAN,
     show_answers_at_end BOOLEAN NOT NULL DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)  -- Assuming this is intended
 );
+
 
 
 CREATE TABLE options (
@@ -46,32 +49,45 @@ CREATE TABLE user_answers (
     user_answer VARCHAR(255)
 );
 
-jdbc:mysql://localhost:3306/SchoolTestDb?zeroDateTimeBehavior=CONVERT_TO_NULL [root on Default schema]
-
-CREATE TABLE tests (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    test_name VARCHAR(255),
-    subject VARCHAR(255),
-    test_date DATE,
-    duration INT,
-    test_pin VARCHAR(255),
-    show_answers VARCHAR(3),
-    instructions TEXT
-);
 
 CREATE TABLE questions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    test_id INT,
-    question_text TEXT,
+    test_id INT NOT NULL,
+    question_text VARCHAR(255) NOT NULL,
     question_type VARCHAR(50),
     correct_answer VARCHAR(255),
-    FOREIGN KEY (test_id) REFERENCES tests(id)
+    FOREIGN KEY (test_id) REFERENCES tests(id)  -- Assuming this is intended
 );
 
-CREATE TABLE options (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    question_id INT,
-    option_text VARCHAR(255),
-    option_number INT,
-    FOREIGN KEY (question_id) REFERENCES questions(id)
-);
+
+jdbc:mysql://localhost:3306/SchoolTestDb?zeroDateTimeBehavior=CONVERT_TO_NULL [root on Default schema]
+
+ALTER TABLE tests ADD COLUMN user_id INT;
+ALTER TABLE tests ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE tests 
+MODIFY COLUMN user_id VARCHAR(255);
+
+
+ALTER TABLE tests 
+DROP FOREIGN KEY fk_user;
+
+
+
+
+
+
+
+
+
+
+
+
+<servlet>
+    <servlet-name>EditTestServlet</servlet-name>
+    <servlet-class>editTest.EditTestServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>EditTestServlet</servlet-name>
+    <url-pattern>/editTest</url-pattern>
+</servlet-mapping>
