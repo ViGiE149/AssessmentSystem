@@ -179,7 +179,11 @@
                     <label>Option 4:</label>
                     <input type="text" name="option4[]" /><br>
                     <label>Correct Answer (Option Number):</label>
-                    <input type="text" name="correctAnswer" /><br>
+                    <input type="text" name="correctAnswer[]" /><br>
+        
+               
+
+        
                 </div>
 
                 <div class="true-false-container" style="display: none;">
