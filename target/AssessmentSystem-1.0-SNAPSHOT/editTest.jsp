@@ -174,12 +174,70 @@
     </form>
 
     <script>
-        function addQuestion() {
-            // Similar JavaScript code as in createTest.jsp to add questions
+      function addQuestion() {
+            var container = document.getElementById('questions-container');
+            var newQuestion = document.createElement('div');
+            newQuestion.classList.add('question');
+            newQuestion.innerHTML = `
+                <label>Question Text:</label>
+                <textarea name="questions" required></textarea><br>
+                
+                <label>Question Type:</label>
+                <select name="questionTypes" onchange="toggleQuestionOptions(this)">
+                    <option value="multiple_choice">Multiple Choice</option>
+                    <option value="true_false">True/False</option>
+                </select><br>
+
+                <div class="options-container" style="display: block;">
+                    <h5>Enter Options for Multiple Choice</h5>
+                    <label>Option 1:</label>
+                    <input type="text" name="option1[]" /><br>
+                    <label>Option 2:</label>
+                    <input type="text" name="option2[]" /><br>
+                    <label>Option 3:</label>
+                    <input type="text" name="option3[]" /><br>
+                    <label>Option 4:</label>
+                    <input type="text" name="option4[]" /><br>
+                    <label>Correct Answer (Option Number):</label>
+                    <input type="text" name="correctAnswer" /><br>
+                </div>
+
+                <div class="true-false-container" style="display: none;">
+                    <label>Correct Answer:</label>
+                    <select name="correctAnswer">
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select><br>
+                </div>
+            `;
+            container.appendChild(newQuestion);
         }
 
-        function toggleQuestionOptions(select) {
-            // Similar JavaScript code as in createTest.jsp
+   
+    
+         function toggleQuestionOptions(select) {
+            var optionsContainer = select.closest('.question').querySelector('.options-container');
+            var trueFalseContainer = select.closest('.question').querySelector('.true-false-container');
+
+            if (select.value === 'multiple_choice') {
+                optionsContainer.style.display = 'block';
+                trueFalseContainer.style.display = 'none';
+
+                // Add required attribute to multiple choice options
+                optionsContainer.querySelectorAll('input').forEach(input => {
+                    input.required = true;
+                });
+                trueFalseContainer.querySelector('select').required = false;
+            } else {
+                optionsContainer.style.display = 'none';
+                trueFalseContainer.style.display = 'block';
+
+                // Remove required from multiple choice options and add it to true/false answer
+                optionsContainer.querySelectorAll('input').forEach(input => {
+                    input.required = false;
+                });
+                trueFalseContainer.querySelector('select').required = true;
+            }
         }
     </script>
 </body>

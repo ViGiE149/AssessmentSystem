@@ -106,48 +106,54 @@ public class EditTestServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int testId;
-        try {
-            testId = Integer.parseInt(request.getParameter("testId"));
-        } catch (NumberFormatException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid test ID.");
-            return;
-        }
+  @Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    int testId;
+    try {
+        testId = Integer.parseInt(request.getParameter("testId"));
+    } catch (NumberFormatException e) {
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid test ID.");
+        return;
+    }
 
-        try {
-            // Process updated test details from the form
-            String testName = request.getParameter("testName");
-            int durationHours = Integer.parseInt(request.getParameter("durationHours"));
-            int durationMinutes = Integer.parseInt(request.getParameter("durationMinutes"));
-            String testDate = request.getParameter("testDate");
-            String latestPin = request.getParameter("latestPin");
-            boolean showAnswersAtEnd = request.getParameter("showAnswers") != null;
+    try {
+        // Process updated test details from the form
+        String testName = request.getParameter("testName");
+        int durationHours = Integer.parseInt(request.getParameter("durationHours"));
+        int durationMinutes = Integer.parseInt(request.getParameter("durationMinutes"));
+        String testDate = request.getParameter("testDate");
+        String latestPin = request.getParameter("latestPin");
+        boolean showAnswersAtEnd = request.getParameter("showAnswers") != null;
 
-            int totalDuration = (durationHours * 60) + durationMinutes;
+        int totalDuration = (durationHours * 60) + durationMinutes;
 
-            // Update the test in the database
-            try (Connection conn = DatabaseConnection.getConnection()) {
-                String sql = "UPDATE tests SET test_name = ?, duration = ?, test_date = ?, latest_pin = ?, show_answers_at_end = ? WHERE id = ?";
-                try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                    stmt.setString(1, testName);
-                    stmt.setInt(2, totalDuration);
-                    stmt.setString(3, testDate);
-                    stmt.setString(4, latestPin);
-                    stmt.setBoolean(5, showAnswersAtEnd);
-                    stmt.setInt(6, testId);
-                    stmt.executeUpdate();
+        // Update the test in the database
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String sql = "UPDATE tests SET test_name = ?, duration = ?, test_date = ?, latest_pin = ?, show_answers_at_end = ? WHERE id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, testName);
+                stmt.setInt(2, totalDuration);
+                stmt.setString(3, testDate);
+                stmt.setString(4, latestPin);
+                stmt.setBoolean(5, showAnswersAtEnd);
+                stmt.setInt(6, testId);
+                
+                int rowsUpdated = stmt.executeUpdate();
+                System.out.println("Rows updated: " + rowsUpdated); // Debugging line
+                if (rowsUpdated == 0) {
+                    throw new SQLException("No rows updated, check if test ID is correct.");
                 }
             }
-
-            // Redirect to a success page or back to the test list
-            response.sendRedirect("testList");
-        } catch (SQLException e) {
-            throw new ServletException("Database access error", e);
-        } catch (NumberFormatException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid duration values.");
         }
+
+        // Redirect to a success page or back to the test list
+        response.sendRedirect("testList");
+    } catch (SQLException e) {
+        throw new ServletException("Database access error", e);
+    } catch (NumberFormatException e) {
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid duration values.");
     }
+}
+
 }

@@ -118,7 +118,7 @@
                 <li><a href="editTest.jsp">Edit Test</a></li>
                 <li><a href="viewGrades.jsp">View Grades</a></li>
                 <li><a href="activateTest.jsp">Activate Tests</a></li>
-                <a href="EditTestServlet?testId=<%= 5 %>">Edit Test</a>
+                <li><a href="testList.jsp">View Tests</a></li>
             </ul>
         </div>
 
