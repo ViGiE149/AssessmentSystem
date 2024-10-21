@@ -24,7 +24,7 @@
             background-color: #f4f4f4;
         }
         .navbar {
-            background: #343a40;
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
             color: #ffffff;
             padding: 15px;
             text-align: right;
@@ -41,7 +41,7 @@
         .sidebar {
             width: 250px;
             height: 100vh;
-            background: #343a40;
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
             color: #ffffff;
             padding: 20px;
             transition: transform 0.3s ease;
@@ -114,11 +114,11 @@
         <div class="sidebar" id="sidebar">
             <h2>Lecturer Menu</h2>
             <ul>
+                  <li><a href="#">Dashboard</a></li>
                 <li><a href="createTest.jsp">Set Test</a></li>
-                <li><a href="editTest.jsp">Edit Test</a></li>
-                <li><a href="viewGrades.jsp">View Grades</a></li>
+                 <li><a href="testList.jsp">View Tests</a></li>
                 <li><a href="activateTest.jsp">Activate Tests</a></li>
-                <li><a href="testList.jsp">View Tests</a></li>
+               
             </ul>
         </div>
 

@@ -4,10 +4,12 @@ RegisterServlet\HashUtil.class
 activateTest.class
 DatabaseConnection\DatabaseConnection.class
 RegisterServlet\RegisterServlet.class
+ViewTestResultsServlet.class
 com\mycompany\assessmentsystem\resources\JakartaEE8Resource.class
 TestServlet.class
 testsClass\Test.class
 createTest\createTest.class
 Questions\Question.class
+viewgrades\veiwGrades.class
 LoginServlet\LoginServlet.class
 EditTestServlet\EditTestServlet.class

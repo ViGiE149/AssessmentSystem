@@ -72,6 +72,71 @@ MODIFY COLUMN user_id VARCHAR(255);
 ALTER TABLE tests 
 DROP FOREIGN KEY fk_user;
 
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(64) NOT NULL,  -- Store encrypted password
+    email VARCHAR(100) NOT NULL,
+    role VARCHAR(20) NOT NULL
+);
+
+
+
+CREATE TABLE tests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    test_name VARCHAR(255) NOT NULL, 
+    user_id INT NOT NULL,
+    duration INT NOT NULL,
+    test_date DATE NOT NULL,
+    latest_pin VARCHAR(255) NOT NULL,
+    is_active BOOLEAN,
+    show_answers_at_end BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE -- Ensures integrity
+);
+
+
+
+CREATE TABLE options (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    question_id INT NOT NULL,
+    option_text VARCHAR(255),
+    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE questions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    test_id INT NOT NULL,
+    question_text VARCHAR(255) NOT NULL,
+    question_type VARCHAR(50),
+    correct_answer VARCHAR(255),
+    FOREIGN KEY (test_id) REFERENCES tests(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE test_results (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id VARCHAR(255),
+    test_name VARCHAR(255),
+    test_id INT NOT NULL,
+    score FLOAT,
+    correct_answers INT,
+    total_questions INT,
+    attempt_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE user_answers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    test_id INT NOT NULL,
+    question_id INT NOT NULL,
+    user_id INT NOT NULL,
+    user_answer VARCHAR(255),
+    FOREIGN KEY (test_id) REFERENCES tests(id) ON DELETE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
 
 
 
@@ -81,6 +146,9 @@ DROP FOREIGN KEY fk_user;
 
 
 
+ALTER TABLE test_results
+ADD COLUMN correct_answers INT,
+ADD COLUMN total_questions INT;
 
 
 <servlet>
@@ -91,3 +159,18 @@ DROP FOREIGN KEY fk_user;
     <servlet-name>EditTestServlet</servlet-name>
     <url-pattern>/editTest</url-pattern>
 </servlet-mapping>
+
+String sql = "SELECT test_name, score, correct_answers, total_questions, attempt_date " +
+             "FROM test_results " +
+             "WHERE test_id = ? AND student_id = ?";
+
+
+https://youtu.be/2E3UNfkNPw0
+https://youtu.be/omWu4kK9To4
+
+
+
+day 1
+https://youtu.be/Qt0UvFJBuLA
+https://youtu.be/2j5e3ITGCR4
+https://youtu.be/ejNNV0H9yyw

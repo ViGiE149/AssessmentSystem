@@ -70,7 +70,7 @@
         int totalQuestions = 0;
         int correctAnswers = 0;
         boolean showAnswers = false;
-
+        String testName = "";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -86,12 +86,13 @@
             rs = ps.executeQuery();
 
             // Create a flag to check if we should show answers at the end
-            String testInfoSQL = "SELECT show_answers_at_end FROM tests WHERE id = ?";
+            String testInfoSQL = "SELECT show_answers_at_end, test_name FROM tests WHERE id = ?";
             PreparedStatement psTestInfo = conn.prepareStatement(testInfoSQL);
             psTestInfo.setInt(1, testId);
             ResultSet rsTestInfo = psTestInfo.executeQuery();
             if (rsTestInfo.next()) {
                 showAnswers = rsTestInfo.getBoolean("show_answers_at_end");
+                testName = rsTestInfo.getString("test_name");
             }
 
             out.println("<table>");
@@ -176,6 +177,22 @@
 
             out.println("<div class='score'>Your Score: " + correctAnswers + " out of " + totalQuestions + " (" + String.format("%.2f", scorePercentage) + "%)</div>");
 
+                // Insert the test result
+            if (session.getAttribute("username") != null) {
+                String insertResultSQL = "INSERT INTO test_results (student_id, test_name,test_id , score, correct_answers, total_questions, attempt_date) VALUES (?, ?,?, ?, ?, ?, NOW())";
+                PreparedStatement psInsertResult = conn.prepareStatement(insertResultSQL);
+                psInsertResult.setString(1, session.getAttribute("username").toString());
+                psInsertResult.setString(2, testName);  
+                psInsertResult.setInt(3, testId);
+                psInsertResult.setFloat(4, scorePercentage);
+                psInsertResult.setInt(5, correctAnswers);
+                psInsertResult.setInt(6, totalQuestions);
+                psInsertResult.executeUpdate();
+                psInsertResult.close();
+            }
+            
+            
+            
             if (!showAnswers) {
                 out.println("<p>The correct answers will not be shown as per test settings.</p>");
             }
